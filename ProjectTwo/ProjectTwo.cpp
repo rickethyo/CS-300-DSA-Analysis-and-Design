@@ -294,7 +294,9 @@ bool LoadCourses(string fileName, BinarySearchTree& courseTree) {
         }
 		// Read prerequisites
 		while (getline(ss, prereq, ',')) {
-			prerequisites.push_back(ToUpper(prereq));
+            if (!prereq.empty()) {
+                prerequisites.push_back(ToUpper(prereq));
+            }
 		}
 
 		// Create a Course object and add it to the courses vector
