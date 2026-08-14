@@ -388,8 +388,16 @@ int main() {
 
         case 2:
             // FIXME (18): Verify data has been loaded
+			if (!dataLoaded) {
+				cout << "Error: No course data loaded. Please load data first." << endl;
+				break;
+			}
             // Print course list using BST in-order traversal
-
+			else {
+				cout << "Course List:" << endl;
+				courseTree.InOrder();
+			}
+            
             break;
 
         case 3:
