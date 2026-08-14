@@ -116,7 +116,7 @@ void BinarySearchTree::addNode(Node* node, Course course) {
 		if (node->left == nullptr) {
 			node->left = new Node(course);
 		}
-        // Replace course if course number already exists
+        // Continue searching the left subtree
 		else {
 			addNode(node->left, course);
 		}
@@ -126,11 +126,15 @@ void BinarySearchTree::addNode(Node* node, Course course) {
 		if (node->right == nullptr) {
 			node->right = new Node(course);
 		}
-        // Replace course if course number already exists
+        // Continue searching the right subtree
 		else {
 			addNode(node->right, course);
 		}
 	}
+    // Replace course if course number already exists
+    else {
+        node->course = course;
+    }
 }
 
 
@@ -226,9 +230,29 @@ string ToUpper(string value) {
  * Validate that all prerequisite course numbers exist
  */
 bool ValidatePrerequisites(const vector<Course>& courses) {
-    // FIXME (7): Check every prerequisite against loaded courses
+    // Check every prerequisite against loaded courses
+    // Check each course in the vector
 
-    return false;
+	for (const Course& course : courses) {
+		// Check each prerequisite for the current course
+		for (const string& prereq : course.prerequisites) {
+			bool found = false;
+			// Search through the list of courses to find the prerequisite
+			for (const Course& c : courses) {
+				if (c.courseNumber == prereq) {
+					found = true;
+					break;
+				}
+			}
+			// If a prerequisite is not found, return false
+			if (!found) {
+				cout << "Error: Prerequisite " << prereq << " for course " << course.courseNumber << " does not exist." << endl;
+				return false;
+			}
+		}
+	}
+
+    return true;
 }
 
 
@@ -239,19 +263,60 @@ bool LoadCourses(string fileName, BinarySearchTree& courseTree) {
 
     vector<Course> courses;
 
-    // FIXME (8): Open the file
+    // Open the file
+    ifstream file(fileName);
 
-    // FIXME (9): Read each line
+	if (!file.is_open()) {
+		cout << "Error: Could not open file " << fileName << endl;
+		return false;
+	}
 
-    // FIXME (10): Split each line at commas
+    string line;
 
-    // FIXME (11): Create Course objects
+    // Read each line
+	while (getline(file, line)) {
 
-    // FIXME (12): Validate prerequisite course numbers
+		// Process each line to extract course information
+		// Split the line into course number, title, and prerequisites
+		stringstream ss(line);
+		string courseNumber, courseTitle, prereq;
+		vector<string> prerequisites;
 
-    // FIXME (13): Insert validated courses into the BST
+        // Read course number and title
+        if (!getline(ss, courseNumber, ',') ||
+            !getline(ss, courseTitle, ',') ||
+            courseNumber.empty() ||
+            courseTitle.empty()) {
 
-    return false;
+            cout << "Error: Invalid file format." << endl;
+            file.close();
+            return false;
+        }
+		// Read prerequisites
+		while (getline(ss, prereq, ',')) {
+			prerequisites.push_back(ToUpper(prereq));
+		}
+
+		// Create a Course object and add it to the courses vector
+		Course course;
+		course.courseNumber = ToUpper(courseNumber);
+		course.courseTitle = courseTitle;
+		course.prerequisites = prerequisites;
+		courses.push_back(course);
+	}
+
+    // Validate prerequisite course numbers
+    if (!ValidatePrerequisites(courses)) {
+        file.close();
+        return false;
+    }
+
+    // Insert validated courses into the BST
+	for (const Course& course : courses) {
+		courseTree.Insert(course);
+	}
+    file.close();
+    return true;
 }
 
 
