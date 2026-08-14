@@ -1,3 +1,18 @@
+/**
+ * Project Two: ABCU Advising Assistance Program
+ *
+ * Name: Ricky G. Buchanan Jr.
+ * Course: CS-300 DSA
+ * Instructor: Jayantha Muthukudage
+ * Southern New Hampshire University
+ * Date: 08/16/2026
+ *
+ * This program loads course information for ABCU and stores the
+ * course data in a binary search tree. Users can display courses
+ * in alphanumeric order or search for an individual course and
+ * view its prerequisite information.
+ */
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -80,7 +95,14 @@ BinarySearchTree::~BinarySearchTree() {
  * Insert a course into the tree
  */
 void BinarySearchTree::Insert(Course course) {
-    // FIXME (1): Insert course into binary search tree
+    // Insert course into binary search tree
+    // If tree is empty, new course becomes the root
+    if (root == nullptr) {
+        root = new Node(course);
+    }
+    else {
+        addNode(root, course);
+    }
 }
 
 
@@ -88,7 +110,27 @@ void BinarySearchTree::Insert(Course course) {
  * Recursively add a course to the correct tree location
  */
 void BinarySearchTree::addNode(Node* node, Course course) {
-    // FIXME (2): Compare course numbers and insert left or right
+    // Compare course numbers and insert left or right
+	// Add course to left subtree if course number is less than current node's course number
+	if (course.courseNumber < node->course.courseNumber) {
+		if (node->left == nullptr) {
+			node->left = new Node(course);
+		}
+        // Replace course if course number already exists
+		else {
+			addNode(node->left, course);
+		}
+	}
+	// Add course to right subtree if course number is greater than current node's course number
+	else if (course.courseNumber > node->course.courseNumber) {
+		if (node->right == nullptr) {
+			node->right = new Node(course);
+		}
+        // Replace course if course number already exists
+		else {
+			addNode(node->right, course);
+		}
+	}
 }
 
 
@@ -96,8 +138,22 @@ void BinarySearchTree::addNode(Node* node, Course course) {
  * Search for a course using its course number
  */
 Course BinarySearchTree::Search(string courseNumber) {
-    // FIXME (3): Search the binary search tree
+    // Search the binary search tree
 
+	Node* current = root;
+
+	while (current != nullptr) {
+		if (courseNumber == current->course.courseNumber) {
+			return current->course;
+		}
+		else if (courseNumber < current->course.courseNumber) {
+			current = current->left;
+		}
+		else {
+			current = current->right;
+		}
+	}
+    // Return an empty course if no match is found
     Course course;
     return course;
 }
@@ -107,7 +163,8 @@ Course BinarySearchTree::Search(string courseNumber) {
  * Begin an in-order traversal
  */
 void BinarySearchTree::InOrder() {
-    // FIXME (4): Call recursive in-order traversal
+    // Call recursive in-order traversal
+	inOrder(root);
 }
 
 
@@ -115,7 +172,15 @@ void BinarySearchTree::InOrder() {
  * Print courses in alphanumeric order
  */
 void BinarySearchTree::inOrder(Node* node) {
-    // FIXME (5): Traverse left, print course, traverse right
+    // Traverse left, print course, traverse right
+	if (node != nullptr) {
+        // Visit left subtree
+		inOrder(node->left);
+        // Print current course
+		cout << node->course.courseNumber << ", " << node->course.courseTitle << endl;
+        // Visit right subtree
+		inOrder(node->right);
+	}
 }
 
 
@@ -132,7 +197,15 @@ void BinarySearchTree::Clear() {
  * Recursively delete nodes
  */
 void BinarySearchTree::destroyTree(Node* node) {
-    // FIXME (6): Delete left and right subtrees, then current node
+    // Delete left and right subtrees, then current node
+
+	if (node != nullptr) {
+        // Delete left and right subtrees first
+		destroyTree(node->left);
+		destroyTree(node->right);
+        // Delete current node
+		delete node;
+	}
 }
 
 
