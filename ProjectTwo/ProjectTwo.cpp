@@ -226,6 +226,26 @@ string ToUpper(string value) {
     return value;
 }
 
+/**
+ * Remove leading and trailing whitespace from a string
+ */
+string Trim(string value) {
+
+    // Remove whitespace from the beginning
+    while (!value.empty() &&
+        isspace(static_cast<unsigned char>(value.front()))) {
+        value.erase(value.begin());
+    }
+
+    // Remove whitespace from the end
+    while (!value.empty() &&
+        isspace(static_cast<unsigned char>(value.back()))) {
+        value.pop_back();
+    }
+
+    return value;
+}
+
 
 /**
  * Validate that all prerequisite course numbers exist
@@ -293,8 +313,22 @@ bool LoadCourses(string fileName, BinarySearchTree& courseTree) {
             file.close();
             return false;
         }
+
+		// Remove leading and trailing whitespace from course number and title
+		courseNumber = Trim(courseNumber);
+		courseTitle = Trim(courseTitle);
+
+		// Verify required fields are not empty
+		if (courseNumber.empty() || courseTitle.empty()) {
+			cout << "Error: Course number or title is missing." << endl;
+			file.close();
+			return false;
+		}
+
 		// Read prerequisites
 		while (getline(ss, prereq, ',')) {
+            prereq = Trim(prereq);
+
             if (!prereq.empty()) {
                 prerequisites.push_back(ToUpper(prereq));
             }
@@ -386,10 +420,13 @@ int main() {
 
         cout << "What would you like to do? ";
 		if (!(cin >> choice)) {
-			cout << "Invalid input. Please enter a number from the provided list." << endl;
-			cin.clear(); // Clear the error flag
-			cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard invalid input
-			continue; // Prompt the user again
+			cout << "Non-Integer input detected: Please enter a number from the provided list." << endl;
+            // Clear the error flag
+			cin.clear(); 
+            // Discard invalid input
+			cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+            // Prompt the user again
+			continue; 
 		}
 
         switch (choice) {
@@ -400,7 +437,7 @@ int main() {
 
             cout << "Enter the course data .csv file name: ";
 
-            // Use getline to read the entire line including spaces)
+            // Use getline to read the entire line including spaces
 			getline(cin >> ws, fileName); 
 
             // Clear previous data and load selected file
