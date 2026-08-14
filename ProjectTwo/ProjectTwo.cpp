@@ -181,8 +181,23 @@ void BinarySearchTree::inOrder(Node* node) {
 	if (node != nullptr) {
         // Visit left subtree
 		inOrder(node->left);
+
         // Print current course
-		cout << node->course.courseNumber << ", " << node->course.courseTitle << endl;
+        if (!node->course.prerequisites.empty()) {
+            cout << node->course.courseNumber << ", "
+                 << node->course.courseTitle
+                 << " (" << node->course.prerequisites.size()
+                 << (node->course.prerequisites.size() == 1
+                    ? " Prerequisite)"
+                    : " Prerequisites)")
+                 << endl;
+        }
+        else {
+            cout << node->course.courseNumber << ", "
+                << node->course.courseTitle
+                << endl;
+        }
+
         // Visit right subtree
 		inOrder(node->right);
 	}
@@ -387,11 +402,11 @@ void PrintCourseInformation(BinarySearchTree& courseTree,
     // Search for and print prerequisite numbers and titles
 	if (course.prerequisites.empty()) {
 		// No Prerequisites found for this course
-		cout << "Prerequisites: None" << endl;
+		cout << "Prerequisites (0): None" << endl;
 	}
 	// Print prerequisites if they exist
 	else {
-		cout << "Prerequisites:" << endl;
+		cout << "Prerequisites (" << course.prerequisites.size() << "):" << endl;
 		for (const string& prereqNumber : course.prerequisites) {
 			Course prereqCourse = courseTree.Search(prereqNumber);
 			if (!prereqCourse.courseNumber.empty()) {
