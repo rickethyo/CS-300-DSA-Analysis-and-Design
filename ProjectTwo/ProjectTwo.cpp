@@ -1,6 +1,7 @@
 /**
  * Project Two: ABCU Advising Assistance Program
  *
+ * Module 7 Submission
  * Name: Ricky G. Buchanan Jr.
  * Course: CS-300 DSA
  * Instructor: Jayantha Muthukudage
@@ -10,7 +11,7 @@
  * This program loads course information for ABCU and stores the
  * course data in a binary search tree. Users can display courses
  * in alphanumeric order or search for an individual course and
- * view its prerequisite information.
+ * view its prerequisite information. 
  */
 
 #include <iostream>
