@@ -328,11 +328,37 @@ bool LoadCourses(string fileName, BinarySearchTree& courseTree) {
 void PrintCourseInformation(BinarySearchTree& courseTree,
     string courseNumber) {
 
-    // FIXME (14): Search for course
+    // Search for course
+    Course course = courseTree.Search(courseNumber);
 
-    // FIXME (15): Print course number and title
+		// Check if course was found
+		if (course.courseNumber.empty()) {
+			cout << "Course " << courseNumber << " not found." << endl;
+			return;
+		}
 
-    // FIXME (16): Search for and print prerequisite numbers and titles
+    // Print course number and title
+	cout << "Course Number: " << course.courseNumber << endl;
+	cout << "Course Title: " << course.courseTitle << endl;
+
+    // Search for and print prerequisite numbers and titles
+	if (course.prerequisites.empty()) {
+		// No Prerequisites found for this course
+		cout << "Prerequisites: None" << endl;
+	}
+	// Print prerequisites if they exist
+	else {
+		cout << "Prerequisites:" << endl;
+		for (const string& prereqNumber : course.prerequisites) {
+			Course prereqCourse = courseTree.Search(prereqNumber);
+			if (!prereqCourse.courseNumber.empty()) {
+				cout << "  " << prereqCourse.courseNumber << ", " << prereqCourse.courseTitle << endl;
+			}
+			else {
+				cout << "  " << prereqNumber << ", (Course not found)" << endl;
+			}
+		}
+	}
 }
 
 
@@ -387,7 +413,7 @@ int main() {
         }
 
         case 2:
-            // FIXME (18): Verify data has been loaded
+            // Verify data has been loaded
 			if (!dataLoaded) {
 				cout << "Error: No course data loaded. Please load data first." << endl;
 				break;
@@ -402,7 +428,11 @@ int main() {
 
         case 3:
         {
-            // FIXME (19): Verify data has been loaded
+			// Verify data has been loaded and prompt user for course number for additional information
+			if (!dataLoaded) {
+				cout << "Error: No course data loaded. Please load data first." << endl;
+				break;
+			}
 
             string courseNumber;
 
@@ -411,7 +441,8 @@ int main() {
 
             courseNumber = ToUpper(courseNumber);
 
-            // FIXME (20): Print requested course information
+            // Print requested course information
+			PrintCourseInformation(courseTree, courseNumber);
 
             break;
         }
