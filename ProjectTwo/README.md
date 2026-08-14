@@ -83,7 +83,7 @@ The course data must be successfully loaded before Options 2 or 3 can be used. O
 ## Project Files
 
 * `ProjectTwo.cpp` - Complete C++ source code for the advising assistance program
-* `CS 300 ABCU_Advising_Program_Input.csv` - Provided ABCU course data provided by SNHU.
+* `CS 300 ABCU_Advising_Program_Input.csv` - ABCU course data provided by SNHU.
 * `README.md` - This file, providing an overview of the project, features, and instructions for use.
 * `Test.csv` - Test CSV file I expanded to 250 courses with random prerequisites for stress testing the program with various course data beyond the provided ABCU course data.
 
