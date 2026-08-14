@@ -19,6 +19,7 @@
 #include <string>
 #include <vector>
 #include <cctype>
+#include <limits>
 
 using namespace std;
 
@@ -384,7 +385,12 @@ int main() {
         cout << endl;
 
         cout << "What would you like to do? ";
-        cin >> choice;
+		if (!(cin >> choice)) {
+			cout << "Invalid input. Please enter a number from the provided list." << endl;
+			cin.clear(); // Clear the error flag
+			cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard invalid input
+			continue; // Prompt the user again
+		}
 
         switch (choice) {
 
@@ -452,7 +458,7 @@ int main() {
             break;
 
         default:
-            cout << "Invalid option. Please try again." << endl;
+            cout << "Invalid option. Please select from the provided list." << endl;
             break;
         }
     }
