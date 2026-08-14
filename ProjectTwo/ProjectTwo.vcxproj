@@ -144,6 +144,7 @@
   <ItemGroup>
     <None Include="CS 300 ABCU_Advising_Program_Input.csv" />
     <None Include="README.md" />
+    <None Include="TEST.csv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
