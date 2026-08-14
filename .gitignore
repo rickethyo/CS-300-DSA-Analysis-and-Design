@@ -364,3 +364,5 @@ MigrationBackup/
 FodyWeavers.xsd
 
 /ProjectTwo/~AutoRecover.ProjectTwo.vcxproj
+/ProjectTwo.zip
+/ProjectTwo/TEST.csv
