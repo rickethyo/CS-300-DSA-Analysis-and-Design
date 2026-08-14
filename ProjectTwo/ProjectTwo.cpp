@@ -342,6 +342,14 @@ bool LoadCourses(string fileName, BinarySearchTree& courseTree) {
 		courses.push_back(course);
 	}
 
+    // Verify the file contained course data
+	if (courses.empty()) {
+		cout << "Error: No course data found in file." << endl;
+		file.close();
+		return false;
+	}
+
+
     // Validate prerequisite course numbers
     if (!ValidatePrerequisites(courses)) {
         file.close();
