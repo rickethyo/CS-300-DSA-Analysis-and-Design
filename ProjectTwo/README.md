@@ -6,7 +6,7 @@ This project is a C++ command-line application developed for ABCU academic advis
 
 The binary search tree was selected based on the analysis completed in Project One. It provides efficient course lookup while also allowing the complete course list to be displayed in order through an in-order traversal.
 
-## Features
+## Features  
 
 * Loads course information from a user-input CSV file
 * Stores course objects in a binary search tree
