@@ -364,10 +364,22 @@ int main() {
         {
             string fileName;
 
-            cout << "Enter the course data file name: ";
-            cin >> fileName;
+            cout << "Enter the course data .csv file name: ";
 
-            // FIXME (17): Clear previous data and load selected file
+            // Use getline to read the entire line including spaces)
+			getline(cin >> ws, fileName); 
+
+            // Clear previous data and load selected file
+            courseTree.Clear();
+
+			if (LoadCourses(fileName, courseTree)) {
+				dataLoaded = true;
+				cout << "Course data loaded successfully." << endl;
+			}
+			else {
+				dataLoaded = false;
+				cout << "Failed to load course data." << endl;
+			}
 
             break;
         }
