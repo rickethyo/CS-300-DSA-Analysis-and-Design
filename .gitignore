@@ -361,8 +361,4 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/ProjectTwo/ProjectTwo.cpp
-/ProjectTwo/ProjectTwo.slnx
-/ProjectTwo/CS 300 ABCU_Advising_Program_Input.csv
-/ProjectTwo/ProjectTwo.vcxproj
-/ProjectTwo/ProjectTwo.vcxproj.filters
+
